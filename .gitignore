@@ -1,0 +1,10 @@
+# Backend
+backend/src/main/resources/application.properties
+backend/target/
+
+# Frontend
+frontend/.env
+frontend/node_modules/
+
+# Environment
+.env

@@ -1,0 +1,11 @@
+spring.application.name=CDRE
+spring.datasource.url=jdbc:mysql://localhost:3306/cdre
+spring.datasource.username=root
+spring.datasource.password=P@yP1g4Lif3
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.jpa.hibernate.ddl-auto=update
+
+anthropic.api.key=your-anthropic-api-key-here
+spring.cache.type=simple
+api.key=your-api-key-here
