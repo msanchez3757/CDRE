@@ -1,54 +1,73 @@
 import { useState } from "react";
+import HomePage from "./components/HomePage";
 import ReconciliationTab from "./components/ReconciliationTab";
 import DataQualityTab from "./components/DataQualityTab";
 
+const tabs = [
+  { id: "home", label: "Home" },
+  { id: "reconciliation", label: "Medication Reconciliation" },
+  { id: "dataQuality", label: "Data Quality Validation" },
+];
+
 export default function App() {
-  const [activeTab, setActiveTab] = useState("reconciliation");
+  const [activeTab, setActiveTab] = useState("home");
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen grid-bg">
 
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
-        <h1 className="text-2xl font-semibold text-gray-800">
-          Clinical Data Reconciliation Engine
-        </h1>
-        <p className="text-sm text-gray-500 mt-1">
-          AI-powered medication reconciliation and data quality validation
-        </p>
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
+        <div className="max-w-5xl mx-auto px-8 py-5 flex items-center gap-4">
+          <button
+            onClick={() => setActiveTab("home")}
+            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+          >
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+              style={{ background: "var(--navy)" }}>
+              <div className="w-3 h-3 rounded-sm" style={{ background: "var(--teal)" }} />
+            </div>
+            <div className="text-left">
+              <h1 className="font-display text-xl font-semibold leading-tight"
+                style={{ color: "var(--navy)" }}>
+                Clinical Data Reconciliation Engine
+              </h1>
+              <p className="text-xs mt-0.5" style={{ color: "var(--slate)" }}>
+                AI-powered medication reconciliation &amp; data quality validation
+              </p>
+            </div>
+          </button>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="max-w-5xl mx-auto px-8">
+          <nav className="flex gap-1">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-4 py-3 text-sm font-medium transition-colors relative ${
+                  activeTab === tab.id ? "tab-active" : "hover:text-slate-700"
+                }`}
+                style={{
+                  color: activeTab === tab.id ? "var(--teal)" : "var(--slate)",
+                }}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </nav>
+        </div>
       </header>
 
-      {/* Tab Navigation */}
-      <div className="bg-white border-b border-gray-200 px-6">
-        <nav className="flex gap-6">
-          <button
-            onClick={() => setActiveTab("reconciliation")}
-            className={`py-3 text-sm font-medium border-b-2 transition-colors ${
-              activeTab === "reconciliation"
-                ? "border-blue-600 text-blue-600"
-                : "border-transparent text-gray-500 hover:text-gray-700"
-            }`}
-          >
-            Medication Reconciliation
-          </button>
-          <button
-            onClick={() => setActiveTab("dataQuality")}
-            className={`py-3 text-sm font-medium border-b-2 transition-colors ${
-              activeTab === "dataQuality"
-                ? "border-blue-600 text-blue-600"
-                : "border-transparent text-gray-500 hover:text-gray-700"
-            }`}
-          >
-            Data Quality Validation
-          </button>
-        </nav>
-      </div>
-
-      {/* Tab Content */}
-      <main className="max-w-4xl mx-auto px-6 py-8">
-        {activeTab === "reconciliation" ? (
+      {/* Main Content */}
+      <main className="max-w-5xl mx-auto px-8 py-10">
+        {activeTab === "home" && (
+          <HomePage onNavigate={setActiveTab} />
+        )}
+        {activeTab === "reconciliation" && (
           <ReconciliationTab />
-        ) : (
+        )}
+        {activeTab === "dataQuality" && (
           <DataQualityTab />
         )}
       </main>
